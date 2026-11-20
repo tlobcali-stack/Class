@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
-import { tagline } from "@/lib/content";
+import type { SiteSettings } from "@/lib/settings-builtin";
 
-export default function Footer({ showJournal = false }: { showJournal?: boolean }) {
+export default function Footer({ showJournal = false, settings: s }: { showJournal?: boolean; settings: SiteSettings }) {
   return (
     <footer data-surface="plum" className="pb-28 md:pb-0">
       <div className="stripe" aria-hidden="true" />
@@ -11,7 +11,7 @@ export default function Footer({ showJournal = false }: { showJournal?: boolean 
           <div>
             <p className="display text-4xl">The Legends of Bollywood</p>
             <p className="mt-2 font-bold text-cream/70">Dance classes with Toolieka Prakash Nikam</p>
-            <p className="mt-5 max-w-sm leading-relaxed text-cream/80">{tagline}</p>
+            <p className="mt-5 max-w-sm leading-relaxed text-cream/80">{s.tagline}</p>
             <Link href="/contact" className="btn btn-primary mt-7">
               Book a trial class
             </Link>
@@ -29,13 +29,13 @@ export default function Footer({ showJournal = false }: { showJournal?: boolean 
             <h2 className="kicker">Contact</h2>
             <ul className="mt-5 space-y-3">
               <li>
-                <a href={`tel:${site.phone}`} className="font-extrabold hover:text-marigold">
-                  {site.phoneDisplay}
+                <a href={`tel:${s.phone}`} className="font-extrabold hover:text-marigold">
+                  {s.phoneDisplay}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="text-cream/80 hover:text-marigold">
-                  {site.email}
+                <a href={`mailto:${s.email}`} className="text-cream/80 hover:text-marigold">
+                  {s.email}
                 </a>
               </li>
               {site.instagram.map((ig) => (

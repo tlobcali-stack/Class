@@ -1,10 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { AUDIENCES, classesFor } from "@/lib/classes";
-import { beyondClass, bio, credentials, styles, tagline } from "@/lib/content";
+import { beyondClass, bio, credentials, styles } from "@/lib/content";
 import { formatDate } from "@/lib/contentsathi/format.ts";
 import { excerpt, listPublished } from "@/lib/contentsathi/posts.ts";
-import { heroPhoto, onStage, photos } from "@/lib/photos";
+import { firstImage, loadSection } from "@/lib/media-source";
+import { loadSettings } from "@/lib/settings-source";
+import MediaFrame from "@/components/MediaFrame";
 import { loadSchedule } from "@/lib/schedule-source";
 import { site } from "@/lib/site";
 import WeekFinder, { type FinderGroup } from "@/components/WeekFinder";
@@ -12,6 +13,10 @@ import WeekFinder, { type FinderGroup } from "@/components/WeekFinder";
 export default async function Home() {
   const posts = (await listPublished()).slice(0, 3);
   const { entries, confirmed, note } = await loadSchedule();
+  const [s, hero, aboutPhoto, onStage] = await Promise.all([loadSettings(), firstImage("home_hero"), firstImage("about"), loadSection("home_on_stage")]);
+  const stageText = s.childrenPhotosCleared
+    ? { heading: "Costumes, lights, and trophy days.", line: "Competition season — students bringing home trophies." }
+    : { heading: "Costumes, lights, and stage days.", line: "Performance teams on stage and in costume." };
   const groups: FinderGroup[] = AUDIENCES.map((a) => ({ id: a.id, label: a.label, blurb: a.blurb, classes: classesFor(a.id, entries) })).filter(
     (g) => g.classes.length > 0,
   );
@@ -23,30 +28,22 @@ export default async function Home() {
         <div className="mx-auto grid max-w-[1280px] gap-12 px-5 pb-14 pt-12 sm:px-8 md:pt-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div>
             <p className="kicker rise">The Legends of Bollywood, with Toolieka Prakash Nikam</p>
-            <h1 className="display rise rise-2 mt-4 text-[clamp(2.6rem,6.6vw,5.4rem)]">
-              Learn Bollywood from a <span className="whitespace-nowrap">film-industry</span> performer.
-            </h1>
-            <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-plum/85 sm:text-xl">{tagline}</p>
+            <h1 className="display rise rise-2 mt-4 text-[clamp(2.6rem,6.6vw,5.4rem)]">{s.heroHeadline}</h1>
+            <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-plum/85 sm:text-xl">{s.tagline}</p>
             <div className="rise rise-3 mt-8 flex flex-wrap gap-3">
               <Link href="/contact" className="btn btn-primary">Book a trial class</Link>
-              <a href={`tel:${site.phone}`} className="btn btn-ghost">Call {site.phoneDisplay}</a>
+              <a href={`tel:${s.phone}`} className="btn btn-ghost">Call {s.phoneDisplay}</a>
             </div>
           </div>
           <div className="rise rise-2 relative mx-auto w-full max-w-md lg:max-w-none">
             <div aria-hidden="true" className="absolute -bottom-4 -left-4 h-full w-full rounded-[1.75rem] bg-marigold" />
-            <Image
-              src={heroPhoto.src}
-              alt={heroPhoto.alt}
-              width={heroPhoto.w}
-              height={heroPhoto.h}
-              priority
-              sizes="(min-width: 1024px) 36vw, 92vw"
-              className="relative aspect-[4/3.6] w-full rounded-[1.75rem] border-4 border-plum object-cover"
-            />
+            <div className="relative aspect-[4/3.6] w-full overflow-hidden rounded-[1.75rem] border-4 border-plum">
+              <MediaFrame m={hero} priority sizes="(min-width: 1024px) 36vw, 92vw" />
+            </div>
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] px-3 pb-20 sm:px-8 md:pb-28">
-          <WeekFinder groups={groups} confirmed={confirmed} note={note} phone={site.phone} phoneDisplay={site.phoneDisplay} />
+          <WeekFinder groups={groups} confirmed={confirmed} note={note} phone={s.phone} phoneDisplay={s.phoneDisplay} />
         </div>
       </section>
 
@@ -69,14 +66,9 @@ export default async function Home() {
       {/* ══ MEET TOOLIEKA ══ */}
       <section data-surface="warm">
         <div className="mx-auto grid max-w-[1280px] gap-12 px-5 py-20 sm:px-8 md:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <Image
-            src={photos.instructorMagenta.src}
-            alt={photos.instructorMagenta.alt}
-            width={photos.instructorMagenta.w}
-            height={photos.instructorMagenta.h}
-            sizes="(min-width: 1024px) 34vw, 92vw"
-            className="mx-auto w-full max-w-md rounded-[1.75rem] border-4 border-plum object-cover"
-          />
+          <div className="relative mx-auto aspect-[2/3] w-full max-w-md overflow-hidden rounded-[1.75rem] border-4 border-plum">
+            <MediaFrame m={aboutPhoto} sizes="(min-width: 1024px) 34vw, 92vw" />
+          </div>
           <div>
             <p className="kicker">Your teacher</p>
             <h2 className="display mt-3 text-[clamp(2rem,5vw,3.4rem)]">Meet Toolieka.</h2>
@@ -98,12 +90,12 @@ export default async function Home() {
       <section data-surface="plum">
         <div className="mx-auto max-w-[1280px] px-5 py-20 sm:px-8 md:py-28">
           <p className="kicker">On stage</p>
-          <h2 className="display mt-3 max-w-2xl text-[clamp(2rem,5vw,3.6rem)]">{onStage.heading}</h2>
-          <p className="mt-5 max-w-xl text-cream/80">{onStage.line}</p>
+          <h2 className="display mt-3 max-w-2xl text-[clamp(2rem,5vw,3.6rem)]">{stageText.heading}</h2>
+          <p className="mt-5 max-w-xl text-cream/80">{stageText.line}</p>
           <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
-            {onStage.photos.map((ph) => (
-              <li key={ph.src} className="aspect-[4/5] overflow-hidden rounded-2xl border-2 border-marigold">
-                <Image src={ph.src} alt={ph.alt} width={ph.w} height={ph.h} sizes="(min-width: 768px) 25vw, 46vw" className="h-full w-full object-cover" />
+            {onStage.map((m) => (
+              <li key={m.key} className="relative aspect-[4/5] overflow-hidden rounded-2xl border-2 border-marigold">
+                <MediaFrame m={m} sizes="(min-width: 768px) 25vw, 46vw" />
               </li>
             ))}
           </ul>
@@ -159,7 +151,7 @@ export default async function Home() {
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed">Tell us who is dancing and what they would like to try. Toolieka will get back to you.</p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <Link href="/contact" className="btn btn-primary">Book a trial class</Link>
-            <a href={`tel:${site.phone}`} className="btn btn-ghost">{site.phoneDisplay}</a>
+            <a href={`tel:${s.phone}`} className="btn btn-ghost">{s.phoneDisplay}</a>
           </div>
         </div>
       </section>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
+import { useSiteSettings } from "@/components/SiteSettings";
 
 const base = [
   { href: "/classes", label: "Classes" },
@@ -16,6 +17,7 @@ const base = [
 const withJournal = (show: boolean) => (show ? [...base.slice(0, 3), { href: "/blog", label: "Journal" }, base[3]] : base);
 
 export default function Nav({ showJournal = false }: { showJournal?: boolean }) {
+  const s = useSiteSettings();
   const links = withJournal(showJournal);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -88,7 +90,7 @@ export default function Nav({ showJournal = false }: { showJournal?: boolean }) 
 
       {/* Persistent mobile bar: the two things a parent does. */}
       <div className="fixed inset-x-3 bottom-3 z-30 flex gap-2 !bg-transparent md:hidden" data-surface="cream">
-        <a href={`tel:${site.phone}`} className="btn btn-ghost flex-1 bg-cream shadow-lg" aria-label={`Call ${site.phoneDisplay}`}>
+        <a href={`tel:${s.phone}`} className="btn btn-ghost flex-1 bg-cream shadow-lg" aria-label={`Call ${s.phoneDisplay}`}>
           Call
         </a>
         <Link href="/contact" className="btn btn-primary flex-[2] shadow-lg">

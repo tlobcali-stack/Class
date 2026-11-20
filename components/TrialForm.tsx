@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { DAYS } from "@/lib/classes";
 import { styles } from "@/lib/content";
-import { site } from "@/lib/site";
+import { useSiteSettings } from "@/components/SiteSettings";
 import { FOR_WHOM, LEVELS, buildTrialRequest } from "@/lib/trial";
 
 /**
@@ -19,11 +19,12 @@ import { FOR_WHOM, LEVELS, buildTrialRequest } from "@/lib/trial";
  * field names; lib/trial.ts is the part worth keeping.
  */
 export default function TrialForm() {
+  const s = useSiteSettings();
   const [sent, setSent] = useState(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    window.location.href = buildTrialRequest(new FormData(e.currentTarget), site.email).href;
+    window.location.href = buildTrialRequest(new FormData(e.currentTarget), s.email).href;
     setSent(true);
   }
 
@@ -32,8 +33,8 @@ export default function TrialForm() {
       <p className="rounded-xl border-2 border-dashed border-plum/40 p-4 text-sm leading-relaxed">
         Sending this opens a ready-written email in your own mail app — it is not a booking system, and nothing is
         confirmed until Toolieka replies. If it does not open, call{" "}
-        <a href={`tel:${site.phone}`} className="font-extrabold text-magenta underline underline-offset-4">
-          {site.phoneDisplay}
+        <a href={`tel:${s.phone}`} className="font-extrabold text-magenta underline underline-offset-4">
+          {s.phoneDisplay}
         </a>
         .
       </p>
@@ -67,8 +68,8 @@ export default function TrialForm() {
       <fieldset>
         <legend className="kicker mb-4">What they want to try</legend>
         <div className="flex flex-wrap gap-2.5">
-          {styles.map((s) => (
-            <label key={s.name} className="check"><input type="checkbox" name="styles" value={s.name} /> {s.name}</label>
+          {styles.map((st) => (
+            <label key={st.name} className="check"><input type="checkbox" name="styles" value={st.name} /> {st.name}</label>
           ))}
           <label className="check"><input type="checkbox" name="styles" value="Not sure yet" /> Not sure yet</label>
         </div>
@@ -101,7 +102,7 @@ export default function TrialForm() {
         {sent && (
           <p role="status" className="mt-4 rounded-xl bg-plum p-4 text-cream">
             Your email app should have opened with the request written out. Press send there. If nothing opened, call{" "}
-            <a href={`tel:${site.phone}`} className="font-extrabold text-marigold underline underline-offset-4">{site.phoneDisplay}</a>.
+            <a href={`tel:${s.phone}`} className="font-extrabold text-marigold underline underline-offset-4">{s.phoneDisplay}</a>.
           </p>
         )}
       </div>

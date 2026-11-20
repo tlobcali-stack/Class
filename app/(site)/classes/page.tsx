@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AUDIENCES, DAYS, DAY_NAMES, classesFor, classesOn } from "@/lib/classes";
 import { loadSchedule } from "@/lib/schedule-source";
-import { site } from "@/lib/site";
+import { loadSettings } from "@/lib/settings-source";
 
 export const metadata: Metadata = {
   title: "Classes",
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Classes() {
+  const s = await loadSettings();
   const { entries, confirmed, note } = await loadSchedule();
   const audiences = AUDIENCES.filter((a) => classesFor(a.id, entries).length > 0);
   return (
@@ -28,7 +29,7 @@ export default async function Classes() {
               <p className="font-extrabold">Call to confirm days and times.</p>
               <p className="mt-1 leading-relaxed">
                 This is the programme as it has been listed, and it can change. For the full schedule and class locations, call{" "}
-                <a href={`tel:${site.phone}`} className="font-extrabold text-magenta underline underline-offset-4">{site.phoneDisplay}</a>.
+                <a href={`tel:${s.phone}`} className="font-extrabold text-magenta underline underline-offset-4">{s.phoneDisplay}</a>.
               </p>
             </div>
           )}

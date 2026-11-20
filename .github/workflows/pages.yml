@@ -34,12 +34,13 @@ jobs:
       - name: Run the tests
         run: npm test
 
-      # Pages has no server: the ContentSathi receiver cannot run there, and a static
+      # Pages has no server: the admin panel and ContentSathi receiver cannot run there, and a static
       # export cannot have an empty blog-post route. Both are removed in this build only.
+      # Pages serves the built-in content only; the admin panel needs the Vercel deployment.
       - name: Remove server-only routes
         run: |
-          rm -rf app/api
-          if ! ls content/blog/*.json >/dev/null 2>&1; then rm -rf "app/blog/[slug]"; fi
+          rm -rf app/api app/admin proxy.ts components/admin lib/admin-auth.ts lib/admin-data.ts
+          if ! ls content/blog/*.json >/dev/null 2>&1; then rm -rf "app/(site)/blog/[slug]"; fi
 
       - name: Build static site
         run: npm run build

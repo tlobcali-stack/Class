@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TrialForm from "@/components/TrialForm";
 import { site } from "@/lib/site";
+import { loadSettings } from "@/lib/settings-source";
 
 export const metadata: Metadata = {
   title: "Book a trial class",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function Contact() {
+export default async function Contact() {
+  const s = await loadSettings();
   return (
     <section data-surface="cream">
       <div className="mx-auto grid max-w-[1280px] gap-14 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[0.8fr_1.2fr]">
@@ -22,11 +24,11 @@ export default function Contact() {
           <ul className="rise rise-3 mt-10 space-y-6">
             <li>
               <p className="kicker">Call</p>
-              <a href={`tel:${site.phone}`} className="display mt-1 block text-4xl hover:text-magenta">{site.phoneDisplay}</a>
+              <a href={`tel:${s.phone}`} className="display mt-1 block text-4xl hover:text-magenta">{s.phoneDisplay}</a>
             </li>
             <li>
               <p className="kicker">Email</p>
-              <a href={`mailto:${site.email}`} className="mt-1 block text-lg font-bold underline underline-offset-4 hover:text-magenta">{site.email}</a>
+              <a href={`mailto:${s.email}`} className="mt-1 block text-lg font-bold underline underline-offset-4 hover:text-magenta">{s.email}</a>
             </li>
             <li>
               <p className="kicker">Where</p>

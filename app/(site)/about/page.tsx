@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { bio, credentials, timeline } from "@/lib/content";
-import { photos } from "@/lib/photos";
+import { firstImage } from "@/lib/media-source";
+import MediaFrame from "@/components/MediaFrame";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -11,7 +11,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-export default function About() {
+export default async function About() {
+  const portrait = await firstImage("about");
   return (
     <>
       <section data-surface="cream">
@@ -24,15 +25,9 @@ export default function About() {
               {bio.body.map((para) => <p key={para}>{para}</p>)}
             </div>
           </div>
-          <Image
-            src={photos.instructorMagenta.src}
-            alt={photos.instructorMagenta.alt}
-            width={photos.instructorMagenta.w}
-            height={photos.instructorMagenta.h}
-            priority
-            sizes="(min-width: 1024px) 38vw, 92vw"
-            className="rise rise-2 w-full rounded-[1.75rem] border-4 border-plum object-cover"
-          />
+          <div className="rise rise-2 relative aspect-[2/3] w-full overflow-hidden rounded-[1.75rem] border-4 border-plum">
+            <MediaFrame m={portrait} priority sizes="(min-width: 1024px) 38vw, 92vw" />
+          </div>
         </div>
       </section>
 
