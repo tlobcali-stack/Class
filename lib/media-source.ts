@@ -6,7 +6,7 @@
  */
 import { gallery, heroPhoto, librarySection, onStage, photos, type Photo } from "./photos.ts";
 import type { Section } from "./media-validate.ts";
-import { publicClient, storagePublicUrl } from "./supabase/clients.ts";
+import { publicClient, storagePublicUrl, supabaseConfigured } from "./supabase/clients.ts";
 
 export type SiteMedia = {
   key: string;
@@ -92,15 +92,21 @@ export async function loadSection(section: Section): Promise<SiteMedia[]> {
       .order("position");
     if (error) throw error;
     const items = mediaFromRows((data ?? []) as unknown as Row[]);
-    return items.length === 0 && NEVER_EMPTY.includes(section) ? builtinSection(section) : items;
+    // An emptied hero/about falls back to a built-in photo — never one of a child, because the
+    // database (not this build) decides whether children's photos may be shown.
+    return items.length === 0 && NEVER_EMPTY.includes(section) ? builtinSection(section).filter((m) => !m.showsChildren) : items;
   } catch (e) {
-    console.error(`media (${section}): using built-in content;`, e instanceof Error ? e.message : e);
-    return builtinSection(section);
+    // With a database configured, a failed read must NOT fall back to the built-in library:
+    // that would bring back photos an admin hid, deleted or switched off (e.g. children's
+    // photos after a parent's request). Throwing keeps the last good cached page live
+    // (Next.js keeps serving it when a refresh fails) and fails a build rather than shipping it.
+    console.error(`media (${section}): database read failed;`, e instanceof Error ? e.message : e);
+    throw e instanceof Error ? e : new Error(String(e));
   }
 }
 
 /** The first image in a section, for places that need exactly one picture (hero, link previews). */
 export async function firstImage(section: Section): Promise<SiteMedia> {
   const items = await loadSection(section);
-  return items.find((m) => m.kind === "image") ?? builtinSection(section)[0];
+  return items.find((m) => m.kind === "image") ?? builtinSection(section).find((m) => !m.showsChildren || !supabaseConfigured) ?? builtinSection(section)[0];
 }

@@ -34,13 +34,13 @@ export async function sendLoginLink(_prev: Result | null, form: FormData): Promi
   const email = cleanText(form.get("email"), 120).toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail("Enter your email address.");
   const db = await sessionClient();
-  const { error } = await db.auth.signInWithOtp({
+  await db.auth.signInWithOtp({
     email,
     // Never creates an account: only people the owner has added can get a link.
     options: { shouldCreateUser: false, emailRedirectTo: `${site.url}/admin/auth/callback` },
   });
-  if (error && /rate|too many|security purposes/i.test(error.message)) return fail("Too many attempts. Wait a minute and try again.");
-  // Same answer whether or not the address is an admin, so the form cannot be used to find out who is.
+  // Always the same answer — even when Supabase throttles a request — because a different reply
+  // for existing accounts would let anyone test which addresses are admins.
   return { ok: true, message: "If that address belongs to an admin, a sign-in link is on its way. It works once, for 15 minutes." };
 }
 
@@ -136,7 +136,8 @@ export async function finalizeUpload(input: {
   }
 
   const path = `uploads/${randomUUID()}.${ext}`;
-  const up = await db.storage.from("media").upload(path, body, { contentType, cacheControl: "31536000", upsert: false });
+  // Cached for an hour only, so a deleted photo stops being served soon after it is removed.
+  const up = await db.storage.from("media").upload(path, body, { contentType, cacheControl: "3600", upsert: false });
   if (up.error) return fail("Saving the file failed. Try again.");
 
   const ins = await db

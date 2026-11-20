@@ -149,9 +149,13 @@ create policy "admins update placements" on public.placements
 create policy "admins delete placements" on public.placements
   for delete to authenticated using ((select public.is_admin()));
 
--- Visitors never write: take away the default write grants as a second lock.
-revoke insert, update, delete, truncate on public.admins, public.site_settings, public.media, public.placements from anon;
-revoke insert, update, delete, truncate on public.admins from authenticated;
+-- Table privileges, stated explicitly rather than relying on Supabase's defaults (which newer
+-- projects may not grant). Row-level security above still decides WHICH rows; these decide
+-- which KINDS of statement can reach the policies at all.
+revoke all on public.admins, public.site_settings, public.media, public.placements from anon, authenticated;
+grant select on public.site_settings, public.media, public.placements to anon, authenticated;
+grant insert, update, delete on public.site_settings, public.media, public.placements to authenticated;
+grant select on public.admins to authenticated;
 
 -- ─── Save a whole section's layout in one step ───────────────────────────────
 -- p_items: [{ "media_id": uuid, "col_span": 1-4, "row_span": 1-3, "focal_x": 0-100,
@@ -184,7 +188,7 @@ begin
     published = excluded.published, updated_at = now();
 end;
 $$;
-revoke all on function public.save_section(text, jsonb) from public;
+revoke all on function public.save_section(text, jsonb) from public, anon;
 grant execute on function public.save_section(text, jsonb) to authenticated;
 
 -- ─── Storage ─────────────────────────────────────────────────────────────────

@@ -32,7 +32,9 @@ export async function loadSettings(): Promise<SiteSettings> {
     if (error) throw error;
     return settingsFromRows(data ?? []);
   } catch (e) {
-    console.error("site settings: using built-in values;", e instanceof Error ? e.message : e);
-    return builtinSettings;
+    // Same rule as lib/media-source.ts: with a database configured, never silently revert to
+    // built-in values (that would undo the children's-photos switch). Keep the last good page.
+    console.error("site settings: database read failed;", e instanceof Error ? e.message : e);
+    throw e instanceof Error ? e : new Error(String(e));
   }
 }
