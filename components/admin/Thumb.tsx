@@ -8,7 +8,7 @@ export default function Thumb({ m, focalX = 50, focalY = 50, zoom = 1 }: { m: Ad
   const style = { objectPosition: pos, transform: zoom > 1 ? `scale(${zoom})` : undefined, transformOrigin: pos };
   if (m.kind === "video_embed") {
     return (
-      <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-plum p-2 text-center text-cream">
+      <span className="flex h-full w-full flex-col items-center justify-center gap-1 bg-ink p-2 text-center text-paper">
         <span aria-hidden="true" className="text-2xl">▶</span>
         <span className="line-clamp-2 text-xs font-bold">{m.embedUrl?.includes("youtube") ? "YouTube" : m.embedUrl?.includes("vimeo") ? "Vimeo" : "Instagram"} video</span>
       </span>

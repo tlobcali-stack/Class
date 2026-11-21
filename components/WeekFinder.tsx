@@ -39,11 +39,11 @@ export default function WeekFinder({
   for (const c of group.classes) byDay.get(c.day)?.push(c);
 
   return (
-    <div className="board" data-surface="plum">
+    <div className="board" data-surface="wine">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h2 className="display whitespace-nowrap text-[clamp(1.9rem,4vw,3rem)]">Who is dancing?</h2>
-          <p className="mt-2 max-w-md text-cream/80">{group.blurb}</p>
+          <p className="mt-2 max-w-md text-paper/80">{group.blurb}</p>
         </div>
         <div role="group" aria-label="Show the week for" className="flex flex-wrap gap-2">
           {groups.map((g) => (
@@ -75,30 +75,30 @@ export default function WeekFinder({
                   {list.map((c) => (
                     <li key={`${c.name}-${c.time}`} className="slot">
                       <p className="slot-time">{c.clock || c.time}</p>
-                      <p className="mt-0.5 font-extrabold leading-tight">{c.name}</p>
-                      <p className="text-sm text-cream/75">{c.level}</p>
-                      {c.location && <p className="text-sm text-cream/75">{c.location}</p>}
+                      <p className="mt-0.5 font-semibold leading-tight">{c.name}</p>
+                      <p className="text-sm text-paper/75">{c.level}</p>
+                      {c.location && <p className="text-sm text-paper/75">{c.location}</p>}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="mt-3 text-sm text-cream/45">No class</p>
+                <p className="mt-3 text-sm text-paper/45">No class</p>
               )}
             </li>
           );
         })}
       </ol>
 
-      <div className="mt-8 flex flex-col gap-5 border-t-2 border-cream/15 pt-6 md:flex-row md:items-center md:justify-between">
-        <p className="max-w-xl text-cream/85">
-          {note && <span className="block font-extrabold text-cream">{note}</span>}
+      <div className="mt-8 flex flex-col gap-5 border-t border-paper/15 pt-6 md:flex-row md:items-center md:justify-between">
+        <p className="max-w-xl text-paper/85">
+          {note && <span className="block font-semibold text-paper">{note}</span>}
           {confirmed ? (
             "Spaces depend on the class. Ask about a trial first."
           ) : (
             <>
-              <span className="font-extrabold text-cream">Call to confirm days and times. </span>
+              <span className="font-semibold text-paper">Call to confirm days and times. </span>
               This is the weekly programme as it has been listed, and it can change. Call{" "}
-              <a href={`tel:${phone}`} className="font-extrabold text-marigold underline underline-offset-4">{phoneDisplay}</a>{" "}
+              <a href={`tel:${phone}`} className="font-semibold text-gold underline underline-offset-4">{phoneDisplay}</a>{" "}
               for the full schedule and class locations.
             </>
           )}

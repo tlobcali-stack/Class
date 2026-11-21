@@ -19,13 +19,13 @@ export default async function Gallery() {
   ]);
   const videos = main.filter((m) => m.kind !== "image").length;
   return (
-    <section data-surface="cream">
+    <section data-surface="paper">
       <div className="mx-auto max-w-[1280px] px-5 pb-20 pt-14 sm:px-8 md:pb-28 md:pt-20">
         <p className="kicker rise">Gallery</p>
-        <h1 className="display rise rise-2 mt-3 max-w-3xl text-[clamp(2.4rem,6.5vw,5rem)]">On stage and in class.</h1>
+        <h1 className="display rise rise-2 mt-3 max-w-3xl text-[clamp(2.2rem,5vw,4rem)]">On stage and in class.</h1>
         <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed">
           {main.length - videos} photos{videos ? ` and ${videos} video${videos === 1 ? "" : "s"}` : ""} from classes, shows and competitions, then film and TV stills, recognition, and images from the earlier website. More on Instagram at{" "}
-          <a href={site.instagram[0].url} target="_blank" rel="noopener noreferrer" className="font-extrabold text-magenta underline underline-offset-4">
+          <a href={site.instagram[0].url} target="_blank" rel="noopener noreferrer" className="font-semibold text-maroon underline underline-offset-4">
             {site.instagram[0].handle}
           </a>
           .
@@ -55,9 +55,9 @@ export default async function Gallery() {
 function MoreSection({ id, title, line, items, contain = false }: { id: string; title: string; line: string; items: SiteMedia[]; contain?: boolean }) {
   if (items.length === 0) return null;
   return (
-    <section aria-labelledby={id} className="mt-20 border-t-2 border-plum pt-12">
+    <section aria-labelledby={id} className="mt-20 border-t border-line pt-12">
       <h2 id={id} className="display text-[clamp(1.8rem,4vw,2.8rem)]">{title}</h2>
-      <p className="mt-4 max-w-2xl leading-relaxed text-plum/80">{line}</p>
+      <p className="mt-4 max-w-2xl leading-relaxed text-ink/80">{line}</p>
       <div className="mt-8">
         <MediaGrid items={items} contain={contain} />
       </div>

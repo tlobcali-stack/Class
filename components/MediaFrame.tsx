@@ -27,9 +27,9 @@ export default function MediaFrame({ m, sizes, priority = false, className = "" 
         referrerPolicy="strict-origin-when-cross-origin"
       />
     ) : (
-      <button type="button" onClick={() => setPlaying(true)} className={`group relative flex h-full min-h-40 w-full items-center justify-center bg-plum text-cream ${className}`} aria-label={`Play video: ${m.alt}`}>
-        <span aria-hidden="true" className="flex h-16 w-16 items-center justify-center rounded-full bg-marigold text-2xl text-plum transition-transform group-hover:scale-110">▶</span>
-        <span className="absolute inset-x-3 bottom-3 line-clamp-2 text-left text-sm font-bold text-cream/90">{m.caption || m.alt}</span>
+      <button type="button" onClick={() => setPlaying(true)} className={`group relative flex h-full min-h-40 w-full items-center justify-center bg-ink text-paper ${className}`} aria-label={`Play video: ${m.alt}`}>
+        <span aria-hidden="true" className="flex h-16 w-16 items-center justify-center rounded-full bg-gold text-2xl text-ink transition-transform group-hover:scale-110">▶</span>
+        <span className="absolute inset-x-3 bottom-3 line-clamp-2 text-left text-sm font-bold text-paper/90">{m.caption || m.alt}</span>
       </button>
     );
   }

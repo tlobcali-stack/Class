@@ -30,17 +30,17 @@ export default function TrialForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-10">
-      <p className="rounded-xl border-2 border-dashed border-plum/40 p-4 text-sm leading-relaxed">
+      <p className="rounded-sm border border-dashed border-ink/30 p-4 text-sm leading-relaxed">
         Sending this opens a ready-written email in your own mail app — it is not a booking system, and nothing is
         confirmed until Toolieka replies. If it does not open, call{" "}
-        <a href={`tel:${s.phone}`} className="font-extrabold text-magenta underline underline-offset-4">
+        <a href={`tel:${s.phone}`} className="font-semibold text-maroon underline underline-offset-4">
           {s.phoneDisplay}
         </a>
         .
       </p>
 
       <fieldset className="grid gap-5 sm:grid-cols-2">
-        <legend className="kicker mb-4">About the dancer</legend>
+        <legend className="kicker kicker-plain mb-4">About the dancer</legend>
         <div className="sm:col-span-2">
           <label className="field-label" htmlFor="name">Name <span aria-hidden="true">*</span></label>
           <input className="field" id="name" name="name" required autoComplete="name" />
@@ -66,7 +66,7 @@ export default function TrialForm() {
       </fieldset>
 
       <fieldset>
-        <legend className="kicker mb-4">What they want to try</legend>
+        <legend className="kicker kicker-plain mb-4">What they want to try</legend>
         <div className="flex flex-wrap gap-2.5">
           {styles.map((st) => (
             <label key={st.name} className="check"><input type="checkbox" name="styles" value={st.name} /> {st.name}</label>
@@ -82,7 +82,7 @@ export default function TrialForm() {
       </fieldset>
 
       <fieldset className="grid gap-5 sm:grid-cols-2">
-        <legend className="kicker mb-4">How to reach you</legend>
+        <legend className="kicker kicker-plain mb-4">How to reach you</legend>
         <div>
           <label className="field-label" htmlFor="email">Email <span aria-hidden="true">*</span></label>
           <input className="field" id="email" name="email" type="email" required autoComplete="email" />
@@ -100,9 +100,9 @@ export default function TrialForm() {
       <div>
         <button type="submit" className="btn btn-primary w-full sm:w-auto">Open the email to send</button>
         {sent && (
-          <p role="status" className="mt-4 rounded-xl bg-plum p-4 text-cream">
+          <p role="status" className="mt-4 rounded-sm bg-ink p-4 text-paper">
             Your email app should have opened with the request written out. Press send there. If nothing opened, call{" "}
-            <a href={`tel:${s.phone}`} className="font-extrabold text-marigold underline underline-offset-4">{s.phoneDisplay}</a>.
+            <a href={`tel:${s.phone}`} className="font-semibold text-gold underline underline-offset-4">{s.phoneDisplay}</a>.
           </p>
         )}
       </div>

@@ -80,15 +80,15 @@ export default function MediaManager({ userId, media, sections }: { userId: stri
   return (
     <div className="mt-8 space-y-10">
       {/* Upload */}
-      <section aria-labelledby="up" className="rounded-2xl border-2 border-plum bg-white p-5">
+      <section aria-labelledby="up" className="rounded-2xl border-2 border-ink bg-white p-5">
         <h2 id="up" className="text-xl font-extrabold">Upload photos or videos</h2>
         <label
-          className="mt-4 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-plum/40 p-8 text-center hover:border-magenta"
+          className="mt-4 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-ink/40 p-8 text-center hover:border-maroon"
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => { e.preventDefault(); pick(e.dataTransfer.files); }}
         >
           <span className="font-bold">Drop files here, or click to choose</span>
-          <span className="text-sm text-plum/70">JPEG or PNG photos up to 15 MB · MP4, MOV or WebM videos up to 50 MB</span>
+          <span className="text-sm text-ink/70">JPEG or PNG photos up to 15 MB · MP4, MOV or WebM videos up to 50 MB</span>
           <input type="file" multiple accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm" className="sr-only" onChange={(e) => { pick(e.target.files); e.target.value = ""; }} />
         </label>
 
@@ -103,8 +103,8 @@ export default function MediaManager({ userId, media, sections }: { userId: stri
             </div>
             <ul className="space-y-3">
               {queue.map((x) => (
-                <li key={x.key} className="grid gap-3 rounded-xl border-2 border-plum/15 p-3 sm:grid-cols-[6rem_1fr]">
-                  <div className="aspect-square overflow-hidden rounded-lg bg-plum">
+                <li key={x.key} className="grid gap-3 rounded-xl border-2 border-ink/15 p-3 sm:grid-cols-[6rem_1fr]">
+                  <div className="aspect-square overflow-hidden rounded-lg bg-ink">
                     {x.preview && (x.kind === "image"
                       // eslint-disable-next-line @next/next/no-img-element -- local preview of the chosen file
                       ? <img src={x.preview} alt="" className="h-full w-full object-cover" />
@@ -123,7 +123,7 @@ export default function MediaManager({ userId, media, sections }: { userId: stri
                         <label className="check"><input type="checkbox" checked={x.children} onChange={(e) => set(x.key, { children: e.target.checked })} /> Shows children</label>
                       </>
                     )}
-                    {x.note && <p className={`text-sm font-bold ${x.state === "error" ? "text-magenta" : "text-plum"}`}>{x.note}</p>}
+                    {x.note && <p className={`text-sm font-bold ${x.state === "error" ? "text-maroon" : "text-ink"}`}>{x.note}</p>}
                     {x.state === "uploading" && <p className="text-sm font-bold">Uploading…</p>}
                   </div>
                 </li>
@@ -135,7 +135,7 @@ export default function MediaManager({ userId, media, sections }: { userId: stri
             </div>
           </div>
         )}
-        {msg && <p role="status" className={`mt-3 font-bold ${msg.ok ? "text-plum" : "text-magenta"}`}>{msg.text}</p>}
+        {msg && <p role="status" className={`mt-3 font-bold ${msg.ok ? "text-ink" : "text-maroon"}`}>{msg.text}</p>}
       </section>
 
       <VideoLinkForm sections={sections} onDone={() => router.refresh()} />
@@ -163,7 +163,7 @@ function VideoLinkForm({ sections, onDone }: { sections: SectionOpt[]; onDone: (
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [pending, start] = useTransition();
   return (
-    <section aria-labelledby="vid" className="rounded-2xl border-2 border-plum bg-white p-5">
+    <section aria-labelledby="vid" className="rounded-2xl border-2 border-ink bg-white p-5">
       <h2 id="vid" className="text-xl font-extrabold">Add a YouTube, Vimeo or Instagram video</h2>
       <form
         className="mt-4 grid gap-3 md:grid-cols-2"
@@ -194,7 +194,7 @@ function VideoLinkForm({ sections, onDone }: { sections: SectionOpt[]; onDone: (
         <label className="check self-end"><input type="checkbox" checked={children} onChange={(e) => setChildren(e.target.checked)} /> Shows children</label>
         <div className="md:col-span-2">
           <button type="submit" className="btn btn-primary" disabled={pending}>{pending ? "Adding…" : "Add video"}</button>
-          {msg && <span role="status" className={`ml-3 font-bold ${msg.ok ? "text-plum" : "text-magenta"}`}>{msg.text}</span>}
+          {msg && <span role="status" className={`ml-3 font-bold ${msg.ok ? "text-ink" : "text-maroon"}`}>{msg.text}</span>}
         </div>
       </form>
     </section>
@@ -209,8 +209,8 @@ function MediaCard({ m, label, onChanged }: { m: AdminMedia; label: (s: Section)
   const [pending, start] = useTransition();
   const dirty = alt !== m.alt || caption !== (m.caption ?? "") || children !== m.showsChildren;
   return (
-    <li className="flex flex-col overflow-hidden rounded-2xl border-2 border-plum/20 bg-white">
-      <div className="aspect-[4/3] bg-plum"><Thumb m={m} /></div>
+    <li className="flex flex-col overflow-hidden rounded-2xl border-2 border-ink/20 bg-white">
+      <div className="aspect-[4/3] bg-ink"><Thumb m={m} /></div>
       <div className="flex flex-1 flex-col gap-2 p-3">
         <label className="text-xs font-bold">Description
           <textarea className="field mt-1 !min-h-0 text-sm" rows={2} maxLength={300} value={alt} onChange={(e) => setAlt(e.target.value)} />
@@ -219,13 +219,13 @@ function MediaCard({ m, label, onChanged }: { m: AdminMedia; label: (s: Section)
           <input className="field mt-1 !min-h-9 !py-1 text-sm" maxLength={300} value={caption} onChange={(e) => setCaption(e.target.value)} />
         </label>
         <label className="check !min-h-9 text-sm"><input type="checkbox" checked={children} onChange={(e) => setChildren(e.target.checked)} /> Shows children</label>
-        <p className="text-xs text-plum/70">{m.sections.length ? `On: ${m.sections.map(label).join(", ")}` : "Not on the website yet"}</p>
+        <p className="text-xs text-ink/70">{m.sections.length ? `On: ${m.sections.map(label).join(", ")}` : "Not on the website yet"}</p>
         <div className="mt-auto flex gap-2 pt-1">
           <button type="button" className="btn btn-primary !min-h-9 flex-1 !px-3 !py-1.5 text-sm" disabled={!dirty || pending}
             onClick={() => start(async () => { const r = await updateMedia({ id: m.id, alt, caption, showsChildren: children }); setMsg(r.ok ? { ok: true, text: "Saved." } : { ok: false, text: r.error }); if (r.ok) onChanged(); })}>
             Save
           </button>
-          <button type="button" className="rounded-full border-2 border-magenta px-3 text-sm font-bold text-magenta hover:bg-magenta hover:text-cream" disabled={pending}
+          <button type="button" className="rounded-full border-2 border-maroon px-3 text-sm font-bold text-maroon hover:bg-maroon hover:text-paper" disabled={pending}
             onClick={() => {
               const where = m.sections.length ? ` It will also disappear from: ${m.sections.map(label).join(", ")}.` : "";
               if (!window.confirm(`Delete this item permanently?${where} This cannot be undone.`)) return;
@@ -234,7 +234,7 @@ function MediaCard({ m, label, onChanged }: { m: AdminMedia; label: (s: Section)
             Delete
           </button>
         </div>
-        {msg && <p role="status" className={`text-xs font-bold ${msg.ok ? "text-plum" : "text-magenta"}`}>{msg.text}</p>}
+        {msg && <p role="status" className={`text-xs font-bold ${msg.ok ? "text-ink" : "text-maroon"}`}>{msg.text}</p>}
       </div>
     </li>
   );

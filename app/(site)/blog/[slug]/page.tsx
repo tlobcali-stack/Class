@@ -51,15 +51,15 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(article).replace(/</g, "\\u003c") }} />
-      <article data-surface="cream">
+      <article data-surface="paper">
         <div className="mx-auto max-w-3xl px-5 pb-20 pt-14 sm:px-8 md:pb-28 md:pt-20">
-          <Link href="/blog" className="font-extrabold text-magenta hover:underline">← Journal</Link>
+          <Link href="/blog" className="font-semibold text-maroon hover:underline">← Journal</Link>
           <p className="kicker mt-8">{post.category}</p>
           <h1 className="display rise mt-3 text-[clamp(2.2rem,5.5vw,3.8rem)] !leading-[1.04]">{post.title}</h1>
-          <p className="mt-5 text-sm font-bold text-plum/60">{formatDate(post.publishedAt)} · {readingMinutes(post.body)} min read</p>
+          <p className="mt-5 text-sm font-bold text-ink/60">{formatDate(post.publishedAt)} · {readingMinutes(post.body)} min read</p>
 
           {post.featuredImage && (
-            <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-[1.5rem] border-2 border-plum">
+            <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-sm border border-line">
               <Image src={post.featuredImage} alt="" fill unoptimized priority sizes="(min-width: 768px) 48rem, 100vw" className="object-cover" />
             </div>
           )}
@@ -74,7 +74,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         </div>
       </article>
 
-      <section data-surface="sun">
+      <section data-surface="stone">
         <div className="mx-auto max-w-[1280px] px-5 py-16 text-center sm:px-8 md:py-24">
           <p className="display mx-auto max-w-2xl text-[clamp(1.8rem,4.5vw,3rem)]">Ready to try a class?</p>
           <Link href="/contact" className="btn btn-primary mt-8">Book a trial class</Link>

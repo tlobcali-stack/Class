@@ -15,7 +15,7 @@ export default function FocalPicker({ m, x, y, onChange }: { m: AdminMedia; x: n
       aria-label="Focus point"
       aria-valuetext={`${x}% from the left, ${y}% from the top`}
       aria-valuenow={x}
-      className="relative cursor-crosshair overflow-hidden rounded-xl bg-plum outline-offset-2"
+      className="relative cursor-crosshair overflow-hidden rounded-xl bg-ink outline-offset-2"
       style={{ aspectRatio: `${m.w} / ${m.h}` }}
       onClick={(e) => {
         const r = e.currentTarget.getBoundingClientRect();
@@ -39,7 +39,7 @@ export default function FocalPicker({ m, x, y, onChange }: { m: AdminMedia; x: n
       )}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-cream shadow-[0_0_0_2px_var(--color-magenta)]"
+        className="pointer-events-none absolute h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-paper shadow-[0_0_0_2px_var(--color-maroon)]"
         style={{ left: `${x}%`, top: `${y}%` }}
       />
     </div>

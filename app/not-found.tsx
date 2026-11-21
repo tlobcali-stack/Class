@@ -9,7 +9,7 @@ export default async function NotFound() {
     <>
     <Nav />
     <main id="main">
-    <section data-surface="cream">
+    <section data-surface="paper">
       <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-8 md:py-36">
         <p className="kicker">404</p>
         <h1 className="display mt-3 max-w-2xl text-[clamp(2.4rem,6.5vw,5rem)]">That page isn&rsquo;t on the schedule.</h1>

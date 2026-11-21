@@ -12,7 +12,7 @@ export default async function Arrange({ searchParams }: { searchParams: Promise<
   return (
     <div>
       <h1 className="display text-3xl sm:text-4xl">Page layout</h1>
-      <p className="mt-2 max-w-2xl text-plum/80">
+      <p className="mt-2 max-w-2xl text-ink/80">
         Pick a part of the site, then drag items to reorder them, make them bigger or smaller, and choose which part of each photo stays in view.
         Nothing changes on the live site until you press <strong>Save layout</strong>.
       </p>
@@ -22,7 +22,7 @@ export default async function Arrange({ searchParams }: { searchParams: Promise<
             key={sec}
             href={`/admin/arrange?s=${sec}`}
             aria-current={sec === section ? "page" : undefined}
-            className={`rounded-full border-2 px-4 py-2 text-sm font-bold ${sec === section ? "border-plum bg-plum text-cream" : "border-plum/30 bg-white hover:border-plum"}`}
+            className={`rounded-full border-2 px-4 py-2 text-sm font-bold ${sec === section ? "border-ink bg-ink text-paper" : "border-ink/30 bg-white hover:border-ink"}`}
           >
             {SECTION_LABELS[sec]}
           </Link>

@@ -17,11 +17,11 @@ export default function SettingsForm({ initial }: { initial: SiteSettings }) {
       ) : (
         <input id={name} name={name} type={opts.type ?? "text"} defaultValue={value} maxLength={opts.max} className="field" aria-invalid={Boolean(err(name))} aria-describedby={`${name}-h`} />
       )}
-      <p id={`${name}-h`} className={`mt-1 text-sm ${err(name) ? "font-bold text-magenta" : "text-plum/70"}`}>{err(name) ?? opts.hint ?? ""}</p>
+      <p id={`${name}-h`} className={`mt-1 text-sm ${err(name) ? "font-bold text-maroon" : "text-ink/70"}`}>{err(name) ?? opts.hint ?? ""}</p>
     </div>
   );
   return (
-    <form action={action} className="mt-6 space-y-5 rounded-2xl border-2 border-plum bg-white p-5">
+    <form action={action} className="mt-6 space-y-5 rounded-2xl border-2 border-ink bg-white p-5">
       <fieldset className="space-y-4">
         <legend className="text-lg font-extrabold">Contact</legend>
         {field("phone_display", "Phone number as visitors see it", initial.phoneDisplay, { hint: "e.g. 224.258.3880", max: 30 })}
@@ -40,10 +40,10 @@ export default function SettingsForm({ initial }: { initial: SiteSettings }) {
           <input type="checkbox" name="children_photos_cleared" defaultChecked={initial.childrenPhotosCleared} />
           Show photos marked &ldquo;shows children&rdquo;
         </label>
-        <p className="mt-1 text-sm text-plum/70">Turn this off to hide every photo of children at once (for example, if a parent withdraws permission).</p>
+        <p className="mt-1 text-sm text-ink/70">Turn this off to hide every photo of children at once (for example, if a parent withdraws permission).</p>
       </fieldset>
       <button type="submit" className="btn btn-primary" disabled={pending}>{pending ? "Saving…" : "Save site details"}</button>
-      {state && <p role="status" className={`font-bold ${state.ok ? "text-plum" : "text-magenta"}`}>{state.ok ? state.message : state.error}</p>}
+      {state && <p role="status" className={`font-bold ${state.ok ? "text-ink" : "text-maroon"}`}>{state.ok ? state.message : state.error}</p>}
     </form>
   );
 }

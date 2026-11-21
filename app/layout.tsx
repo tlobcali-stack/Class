@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Archivo, Fraunces, Space_Mono } from "next/font/google";
+import { Marcellus, Source_Sans_3, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { site, siteUrlConfigured } from "@/lib/site";
 import { loadSettings } from "@/lib/settings-source";
 import { firstImage } from "@/lib/media-source";
 
-/** Archivo (heavy, tight) for display and body, Fraunces italic for the odd accent word, Space Mono rationed to small kickers. */
-const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap" });
-const fraunces = Fraunces({ subsets: ["latin"], style: ["italic"], weight: ["500"], variable: "--font-fraunces", display: "swap" });
+/** Marcellus (a classical engraved roman) for headings only; Source Sans 3 for everything people read; Space Mono only inside articles' code. */
+const marcellus = Marcellus({ subsets: ["latin"], weight: ["400"], variable: "--font-marcellus", display: "swap" });
+const source = Source_Sans_3({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-source", display: "swap" });
 const mono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-mono", display: "swap" });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
 /** The document shell shared by the public site (app/(site)) and the admin panel (app/admin). */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${fraunces.variable} ${mono.variable}`}>
-      <body className="bg-cream text-plum antialiased">{children}</body>
+    <html lang="en" className={`${marcellus.variable} ${source.variable} ${mono.variable}`}>
+      <body className="bg-paper text-ink antialiased">{children}</body>
     </html>
   );
 }

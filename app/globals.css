@@ -2,130 +2,121 @@
 
 /* ============================================================================
    The Legends of Bollywood — dance classes
-   Thesis: the same family as her wedding site, turned up. Warm cream does the
-   reading; deep plum gives the weight; magenta carries every action; marigold is
-   the stage light — big shapes and highlights, never small text.
+   Thesis: a performing-arts academy, not a party flyer. White paper and soft
+   stone do the reading; ink carries the text; deep maroon (the colour of a
+   classical costume) carries every action; antique gold is used only as fine
+   rules and as accent text on the dark wine sections.
 
-   PALETTE, VERIFIED (WCAG relative-luminance contrast, computed, not eyeballed):
-     cream #FFF6E8   cream-warm #FBE9D0   plum #24102C   plum-soft #3A1745
-     magenta #B0104B   magenta-hot #C7185C   marigold #F5A800   rose #E9437D
-     plum     on cream        = 16.53:1  (AAA)
-     magenta  on cream        =  6.49:1  (AA — links, and button fills with cream text)
-     cream    on magenta-hot  =  5.28:1  (AA — button hover)
-     plum     on marigold     =  8.84:1  (AAA)
-     marigold on plum         =  8.84:1  (AAA — accent text on dark sections)
-     marigold on plum-soft    =  7.55:1  (AAA)
-     rose     on plum         =  4.69:1  (AA — large display accents only)
-     magenta  on plum         =  2.55:1  FAILS — magenta must never sit on plum
-     magenta  on marigold     =  3.47:1  large text only — never body copy
-   The two failing lines are constraints, not notes: dark sections resolve their
-   accent to marigold, enforced once below via [data-surface], not remembered at
-   each call site.
-
-   Motion is CSS only and is never required to see anything: no element starts
-   hidden, there is no JavaScript gate, and prefers-reduced-motion switches it off.
+   PALETTE, VERIFIED (WCAG relative-luminance contrast, computed):
+     paper #FFFFFF  stone #F5F3EF  ink #1F1B24  maroon #7B1C33  maroon-hot #94233F
+     wine #3A0E1B  wine-soft #4E1626  gold #CDAE78  line #E4DFD7
+     ink    on paper / stone  = 16.93 / 15.28  (AAA)
+     maroon on paper / stone  = 10.21 /  9.22  (AAA — links, button fills)
+     paper  on maroon-hot     =  8.17          (AAA — button hover)
+     paper  on wine           = 16.69          (AAA)
+     gold   on wine           =  7.88          (AAA — accent text on dark sections)
+     gold   on paper          =  ~2.1  FAILS for text — gold is a hairline on light
+                                       surfaces, never text. Enforced via [data-surface].
    ========================================================================== */
 
 @theme {
-  --color-cream: #fff6e8;
-  --color-cream-warm: #fbe9d0;
-  --color-plum: #24102c;
-  --color-plum-soft: #3a1745;
-  --color-magenta: #b0104b;
-  --color-magenta-hot: #c7185c;
-  --color-marigold: #f5a800;
-  --color-rose: #e9437d;
-  --color-line: #e8d3b3;
+  --color-paper: #ffffff;
+  --color-stone: #f5f3ef;
+  --color-ink: #1f1b24;
+  --color-maroon: #7b1c33;
+  --color-maroon-hot: #94233f;
+  --color-wine: #3a0e1b;
+  --color-wine-soft: #4e1626;
+  --color-gold: #cdae78;
+  --color-line: #e4dfd7;
 
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-marcellus), ui-serif, Georgia, serif;
+  --font-sans: var(--font-source), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
 @layer base {
   :root {
-    --accent: var(--color-magenta);
-    --accent-hot: var(--color-magenta-hot);
-    --on-accent: var(--color-cream);
-    --focus-ring: var(--color-magenta);
+    --accent: var(--color-maroon);
+    --accent-hot: var(--color-maroon-hot);
+    --on-accent: var(--color-paper);
+    --focus-ring: var(--color-maroon);
   }
   html {
-    background: var(--color-cream);
-    color: var(--color-plum);
+    background: var(--color-paper);
+    color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
   }
   body {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
     overflow-x: hidden;
   }
   ::selection {
-    background: var(--color-magenta);
-    color: var(--color-cream);
+    background: var(--color-maroon);
+    color: var(--color-paper);
   }
   :focus-visible {
-    outline: 3px solid var(--focus-ring);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 3px;
-    border-radius: 3px;
   }
 }
 
 @layer components {
   /* ── Surfaces: one place that decides text and accent colour ─────────── */
-  [data-surface="cream"] {
-    background: var(--color-cream);
-    color: var(--color-plum);
-    --accent: var(--color-magenta);
-    --accent-hot: var(--color-magenta-hot);
-    --on-accent: var(--color-cream);
-    --focus-ring: var(--color-magenta);
+  [data-surface="paper"] {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    --accent: var(--color-maroon);
+    --accent-hot: var(--color-maroon-hot);
+    --on-accent: var(--color-paper);
+    --focus-ring: var(--color-maroon);
   }
-  [data-surface="warm"] {
-    background: var(--color-cream-warm);
-    color: var(--color-plum);
-    --accent: var(--color-magenta);
-    --accent-hot: var(--color-magenta-hot);
-    --on-accent: var(--color-cream);
-    --focus-ring: var(--color-magenta);
+  [data-surface="stone"] {
+    background: var(--color-stone);
+    color: var(--color-ink);
+    --accent: var(--color-maroon);
+    --accent-hot: var(--color-maroon-hot);
+    --on-accent: var(--color-paper);
+    --focus-ring: var(--color-maroon);
   }
-  [data-surface="sun"] {
-    background: var(--color-marigold);
-    color: var(--color-plum);
-    --accent: var(--color-plum);
-    --accent-hot: var(--color-plum-soft);
-    --on-accent: var(--color-cream);
-    --focus-ring: var(--color-plum);
-  }
-  [data-surface="plum"] {
-    background: var(--color-plum);
-    color: var(--color-cream);
-    --accent: var(--color-marigold);
-    --accent-hot: #ffbe33;
-    --on-accent: var(--color-plum);
-    --focus-ring: var(--color-marigold);
+  [data-surface="wine"] {
+    background: var(--color-wine);
+    color: var(--color-paper);
+    --accent: var(--color-gold);
+    --accent-hot: #dcc297;
+    --on-accent: var(--color-wine);
+    --focus-ring: var(--color-gold);
   }
 
   /* ── Type ────────────────────────────────────────────────────────────── */
+  /* Marcellus: an engraved, classical roman — formal at headline sizes. One weight only. */
   .display {
     font-family: var(--font-display);
-    font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 0.98;
-  }
-  .serif-accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  /* Small lead-in lines: Fraunces italic in sentence case (not tracked-out mono capitals). */
-  .kicker {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 500;
-    font-size: 1.05rem;
+    font-weight: 400;
     letter-spacing: 0;
+    line-height: 1.12;
+  }
+  /* Small lead-in lines: sentence case, semibold, in the section accent; a short gold rule before. */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
     color: var(--accent);
+  }
+  .kicker::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: var(--color-gold);
+  }
+  /* Field and list labels: the same voice, without the rule. */
+  .kicker-plain::before {
+    display: none;
   }
 
   /* ── Buttons ─────────────────────────────────────────────────────────── */
@@ -135,33 +126,31 @@
     justify-content: center;
     gap: 0.5rem;
     min-height: 3rem;
-    padding: 0.85rem 1.6rem;
-    border-radius: 999px;
-    font-weight: 800;
+    padding: 0.8rem 1.6rem;
+    border-radius: 2px;
+    font-weight: 600;
     font-size: 0.95rem;
-    letter-spacing: 0.01em;
-    transition: background-color 200ms ease, color 200ms ease, transform 200ms ease;
+    letter-spacing: 0.02em;
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
     white-space: nowrap;
-  }
-  .btn:active {
-    transform: translateY(1px);
   }
   .btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
-    transform: none;
   }
   .btn-primary {
     background: var(--accent);
     color: var(--on-accent);
+    border: 1px solid var(--accent);
   }
   .btn-primary:hover {
     background: var(--accent-hot);
+    border-color: var(--accent-hot);
   }
   .btn-ghost {
     background: transparent;
     color: inherit;
-    border: 2px solid currentColor;
+    border: 1px solid currentColor;
   }
   .btn-ghost:hover {
     background: var(--accent);
@@ -169,33 +158,40 @@
     border-color: var(--accent);
   }
 
-  /* ── Cards, chips, rules ─────────────────────────────────────────────── */
+  /* ── Cards, chips, frames ────────────────────────────────────────────── */
   .card {
-    background: #fffdf8;
-    border: 2px solid var(--color-plum);
-    border-radius: 1.25rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-top: 2px solid var(--color-maroon);
+    border-radius: 2px;
   }
-  [data-surface="plum"] .card {
-    background: var(--color-plum-soft);
-    border-color: var(--color-marigold);
+  [data-surface="wine"] .card {
+    background: var(--color-wine-soft);
+    border-color: rgba(205, 174, 120, 0.35);
+    border-top-color: var(--color-gold);
   }
   .chip {
     display: inline-block;
-    padding: 0.2rem 0.7rem;
-    border-radius: 999px;
-    border: 1.5px solid currentColor;
+    padding: 0.3rem 0.85rem;
+    border-radius: 2px;
+    border: 1px solid currentColor;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 600;
+  }
+  /* A gallery mat: the photo, then a fine gold line set just outside it. */
+  .frame {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 10px;
   }
   .stripe {
-    height: 0.6rem;
-    background: repeating-linear-gradient(90deg, var(--color-magenta) 0 2.5rem, var(--color-marigold) 2.5rem 5rem, var(--color-plum) 5rem 7.5rem);
+    height: 1px;
+    background: var(--color-gold);
+    opacity: 0.6;
   }
-
 
   /* ── Home class board (components/WeekFinder.tsx) ────────────────────── */
   .board {
-    border-radius: 1.75rem;
+    border-radius: 2px;
     padding: 1.75rem 1.25rem;
   }
   @media (min-width: 768px) {
@@ -204,19 +200,19 @@
   .who {
     min-height: 2.75rem;
     padding: 0.45rem 1.1rem;
-    border-radius: 999px;
-    border: 2px solid rgba(255, 246, 232, 0.35);
-    font-weight: 800;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: 600;
     font-size: 0.95rem;
-    color: var(--color-cream);
+    color: var(--color-paper);
     cursor: pointer;
     transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
   }
-  .who:hover { border-color: var(--color-marigold); }
+  .who:hover { border-color: var(--color-gold); }
   .who[aria-pressed="true"] {
-    background: var(--color-marigold);
-    border-color: var(--color-marigold);
-    color: var(--color-plum);
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    color: var(--color-wine);
   }
   .week {
     margin-top: 2rem;
@@ -225,20 +221,20 @@
   }
   @media (min-width: 1024px) {
     .week { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; }
-    .day + .day { border-left: 1px solid rgba(255, 246, 232, 0.15); }
+    .day + .day { border-left: 1px solid rgba(255, 255, 255, 0.14); }
     .day { padding: 0 0.9rem; }
   }
   .day-name {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 1.5rem;
-    color: var(--color-marigold);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--color-gold);
     line-height: 1;
   }
   .slot-time {
     font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--color-rose);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-gold);
   }
   /* Phones: a list of the days that have a class, each a row. */
   @media (max-width: 1023px) {
@@ -247,7 +243,7 @@
       grid-template-columns: 3.25rem 1fr;
       gap: 0.75rem;
       padding-top: 0.9rem;
-      border-top: 1px solid rgba(255, 246, 232, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
     }
     .day ul { margin-top: 0; }
     .day-empty { display: none; }
@@ -257,24 +253,24 @@
   .field {
     width: 100%;
     min-height: 3rem;
-    border: 2px solid var(--color-plum);
-    background: #fffdf8;
-    color: var(--color-plum);
+    border: 1px solid #b9b2a8;
+    background: var(--color-paper);
+    color: var(--color-ink);
     padding: 0.7rem 0.9rem;
-    border-radius: 0.75rem;
+    border-radius: 2px;
     font: inherit;
     font-size: 1rem;
   }
   .field:focus {
     outline: none;
-    border-color: var(--color-magenta);
-    box-shadow: 0 0 0 3px rgba(176, 16, 75, 0.25);
+    border-color: var(--color-maroon);
+    box-shadow: 0 0 0 3px rgba(123, 28, 51, 0.18);
   }
   .field-label {
     display: block;
     margin-bottom: 0.4rem;
-    font-weight: 800;
-    font-size: 0.85rem;
+    font-weight: 600;
+    font-size: 0.9rem;
   }
   .check {
     display: inline-flex;
@@ -282,19 +278,20 @@
     gap: 0.5rem;
     min-height: 2.75rem;
     padding: 0.35rem 0.9rem;
-    border: 2px solid var(--color-plum);
-    border-radius: 999px;
-    background: #fffdf8;
-    font-weight: 700;
+    border: 1px solid #b9b2a8;
+    border-radius: 2px;
+    background: var(--color-paper);
+    font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
   }
   .check:has(input:checked) {
-    background: var(--color-plum);
-    color: var(--color-cream);
+    background: var(--color-maroon);
+    border-color: var(--color-maroon);
+    color: var(--color-paper);
   }
   .check input {
-    accent-color: var(--color-magenta);
+    accent-color: var(--color-maroon);
     width: 1.1rem;
     height: 1.1rem;
   }
@@ -332,17 +329,16 @@
   .post-body h3,
   .post-body h4 {
     font-family: var(--font-display);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-weight: 400;
+    line-height: 1.15;
     margin-top: 2.5rem;
   }
   .post-body h2 { font-size: 1.9rem; }
   .post-body h3 { font-size: 1.45rem; }
   .post-body h4 { font-size: 1.15rem; }
   .post-body a {
-    color: var(--color-magenta);
-    font-weight: 700;
+    color: var(--color-maroon);
+    font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -352,30 +348,29 @@
   .post-body ol { list-style: decimal; }
   .post-body li + li { margin-top: 0.45rem; }
   .post-body blockquote {
-    border-left: 6px solid var(--color-marigold);
+    border-left: 2px solid var(--color-gold);
     padding-left: 1.1rem;
-    font-family: var(--font-serif);
-    font-style: italic;
+    font-family: var(--font-display);
     font-size: 1.3rem;
     line-height: 1.5;
   }
   .post-body code {
     font-family: var(--font-mono);
     font-size: 0.9em;
-    background: var(--color-cream-warm);
+    background: var(--color-stone);
     padding: 0.1em 0.35em;
     border-radius: 4px;
   }
   .post-body hr {
     border: 0;
-    height: 3px;
+    height: 1px;
     background: var(--color-line);
     margin-block: 2.25rem;
   }
   .post-body img {
     width: 100%;
     height: auto;
-    border-radius: 1rem;
+    border-radius: 2px;
   }
 }
 

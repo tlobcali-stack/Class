@@ -16,7 +16,7 @@ export default function MediaGrid({ items, framed = true, contain = false }: { i
       {items.map((m) => (
         <li
           key={m.key}
-          className={`${COL[m.colSpan] ?? COL[1]} ${ROW[m.rowSpan] ?? ROW[1]} relative overflow-hidden rounded-2xl ${framed ? "border-2 border-plum" : ""} ${contain ? "bg-white" : ""}`}
+          className={`${COL[m.colSpan] ?? COL[1]} ${ROW[m.rowSpan] ?? ROW[1]} relative overflow-hidden rounded-sm ${framed ? "border border-line" : ""} ${contain ? "bg-white" : ""}`}
         >
           {contain && m.kind === "image" ? (
             <div className="h-full w-full p-4 [&_img]:!object-contain">

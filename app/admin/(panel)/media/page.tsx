@@ -9,7 +9,7 @@ export default async function MediaPage() {
   return (
     <div>
       <h1 className="display text-3xl sm:text-4xl">Photos &amp; videos</h1>
-      <p className="mt-2 max-w-2xl text-plum/80">
+      <p className="mt-2 max-w-2xl text-ink/80">
         Upload photos (up to 15 MB) and short videos (up to 50 MB), or add a YouTube, Vimeo or Instagram link.
         Photos are resized automatically and their hidden location data is removed.
       </p>

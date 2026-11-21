@@ -12,8 +12,8 @@ const NOTES: Record<string, string> = {
 export default async function Login({ searchParams }: { searchParams: Promise<{ e?: string }> }) {
   const { e } = await searchParams;
   return (
-    <main className="flex min-h-screen items-center justify-center bg-cream-warm px-5 py-16">
-      <div className="w-full max-w-md rounded-[1.5rem] border-2 border-plum bg-cream p-8">
+    <main className="flex min-h-screen items-center justify-center bg-stone px-5 py-16">
+      <div className="w-full max-w-md rounded-[1.5rem] border-2 border-ink bg-paper p-8">
         <p className="kicker">The Legends of Bollywood</p>
         <h1 className="display mt-2 text-4xl">Admin sign-in</h1>
         {!supabaseConfigured ? (
@@ -23,8 +23,8 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
           </p>
         ) : (
           <>
-            <p className="mt-4 leading-relaxed text-plum/80">Enter your email. We&rsquo;ll send you a link that signs you in; no password needed.</p>
-            {e && NOTES[e] && <p role="alert" className="mt-5 rounded-xl border-2 border-magenta bg-white p-3 font-bold text-magenta">{NOTES[e]}</p>}
+            <p className="mt-4 leading-relaxed text-ink/80">Enter your email. We&rsquo;ll send you a link that signs you in; no password needed.</p>
+            {e && NOTES[e] && <p role="alert" className="mt-5 rounded-xl border-2 border-maroon bg-white p-3 font-bold text-maroon">{NOTES[e]}</p>}
             <LoginForm />
           </>
         )}

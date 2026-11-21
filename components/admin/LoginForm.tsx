@@ -13,7 +13,7 @@ export default function LoginForm() {
       </div>
       <button type="submit" className="btn btn-primary w-full" disabled={pending}>{pending ? "Sending…" : "Email me a sign-in link"}</button>
       {state && (
-        <p role="status" className={`rounded-xl p-3 font-bold ${state.ok ? "bg-white text-plum" : "border-2 border-magenta bg-white text-magenta"}`}>
+        <p role="status" className={`rounded-xl p-3 font-bold ${state.ok ? "bg-white text-ink" : "border-2 border-maroon bg-white text-maroon"}`}>
           {state.ok ? state.message : state.error}
         </p>
       )}
